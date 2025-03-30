@@ -24,6 +24,14 @@ export class Board {
     return container
   }
 
+  shuffle() {
+    for (let i = this.tiles.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[this.tiles[i], this.tiles[j]] = [this.tiles[j], this.tiles[i]]
+    }
+    this.tiles.forEach((tile) => this.updateTilePosition(tile))
+  }
+
   moveTile(tile: Tile) {
     const emptyTile = this.tiles.find((t) => t.empty)!
     const tileIndex = this.tiles.indexOf(tile)
