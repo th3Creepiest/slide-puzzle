@@ -17,7 +17,7 @@ class Board {
   constructor(readonly rows: number, readonly cols: number) {
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
-        this.tiles.push(new Tile(i * this.cols + j))
+        this.tiles.push(new Tile(i * this.cols + j, i === this.rows - 1 && j === this.cols - 1))
       }
     }
   }
@@ -32,12 +32,14 @@ class Board {
 }
 
 class Tile {
-  constructor(readonly id: number) {}
+  constructor(readonly id: number, readonly empty: boolean) {}
   render(): HTMLDivElement {
     const container = document.createElement("div")
     container.id = `tile-${this.id}`
     container.classList.add("tile")
-    container.textContent = (this.id + 1).toString()
+    if (!this.empty) {
+      container.textContent = (this.id + 1).toString()
+    }
     return container
   }
 }
