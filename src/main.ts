@@ -1,1 +1,4 @@
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `<h1>Hello World !!!</h1>`
+import { Game } from "./game_objects"
+
+const game = new Game(3, 3)
+game.start()
