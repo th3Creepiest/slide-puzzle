@@ -49,6 +49,7 @@ export class Board {
       this.tiles[tileIndex] = emptyTile
       this.updateTilePosition(tile)
       this.updateTilePosition(emptyTile)
+      if (this.isSolved()) alert("You won!")
     }
   }
 
@@ -59,5 +60,14 @@ export class Board {
     const col = index % this.cols
     tileElement.style.gridRowStart = `${row + 1}`
     tileElement.style.gridColumnStart = `${col + 1}`
+  }
+
+  isSolved(): boolean {
+    for (let i = 0; i < this.rows * this.cols - 1; i++) {
+      if (this.tiles[i].id + 1 !== i + 1) {
+        return false
+      }
+    }
+    return true
   }
 }
