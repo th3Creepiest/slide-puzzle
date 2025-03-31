@@ -42,3 +42,29 @@ body {
   background-color: darkblue;
   color: white;
 }
+
+#shuffle-button {
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: black;
+  background-color: cornflowerblue;
+  border: 0.2rem solid black;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+}
+
+#shuffle-button:hover {
+  background-color: darkblue;
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.6);
+}
+
+#shuffle-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+}
