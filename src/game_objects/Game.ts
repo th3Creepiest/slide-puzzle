@@ -6,52 +6,72 @@ export class Game {
   readonly board: Board;
   readonly shuffleButton: HTMLButtonElement;
   readonly movesLabel: HTMLDivElement;
+  private boardElement: HTMLDivElement;
 
   constructor(rows: number, cols: number) {
-    this.board = new Board(rows, cols);
     this.container = document.createElement("div");
     this.container.id = "slide-puzzle";
+    this.board = new Board(rows, cols);
+    this.boardElement = this.createBoardElement();
+    this.shuffleButton = this.createShuffleButton();
+    this.movesLabel = this.createMovesLabel();
+    this.appendElementsToContainer();
+  }
 
-    // Create board
+  private createBoardElement(): HTMLDivElement {
     const boardElement = document.createElement("div");
     boardElement.id = "board";
     boardElement.style.gridTemplateColumns = `repeat(${this.board.cols}, 1fr)`;
     boardElement.style.gridTemplateRows = `repeat(${this.board.rows}, 1fr)`;
+
     this.board.tiles.forEach((tile) => {
       const tileElement = this.renderTile(tile);
-      tileElement.addEventListener("click", () => {
-        if (this.board.moveTile(tile)) {
-          this.update();
-          this.updateMovesLabel();
-          if (this.board.isSolved()) alert("You won!");
-        }
-      });
+      this.addTileClickHandler(tileElement, tile);
       boardElement.appendChild(tileElement);
     });
 
-    // Create shuffle button
-    this.shuffleButton = document.createElement("button");
-    this.shuffleButton.id = "shuffle-button";
-    this.shuffleButton.innerText = "Shuffle";
-    this.shuffleButton.onclick = () => {
-      this.board.shuffle();
-      this.update();
-      this.updateMovesLabel();
-    };
+    return boardElement;
+  }
 
-    // Create moves counter label
-    this.movesLabel = document.createElement("div");
-    this.movesLabel.id = "moves-label";
+  private addTileClickHandler(tileElement: HTMLDivElement, tile: Tile): void {
+    tileElement.addEventListener("click", () => {
+      if (this.board.moveTile(tile)) {
+        this.update();
+        this.updateMovesLabel();
+        this.checkWinCondition();
+      }
+    });
+  }
+
+  private createShuffleButton(): HTMLButtonElement {
+    const button = document.createElement("button");
+    button.id = "shuffle-button";
+    button.innerText = "Shuffle";
+    button.onclick = () => this.handleShuffle();
+    return button;
+  }
+
+  private handleShuffle(): void {
+    this.board.shuffle();
+    this.update();
     this.updateMovesLabel();
+  }
 
-    // Append elements to container
-    this.container.appendChild(boardElement);
+  private createMovesLabel(): HTMLDivElement {
+    const label = document.createElement("div");
+    label.id = "moves-label";
+    label.innerText = "Moves: 0";
+    return label;
+  }
+
+  private appendElementsToContainer(): void {
+    this.container.appendChild(this.boardElement);
     this.container.appendChild(this.shuffleButton);
     this.container.appendChild(this.movesLabel);
     document.body.appendChild(this.container);
   }
 
-  renderTile(tile: Tile): HTMLDivElement {
+  private renderTile(tile: Tile): HTMLDivElement {
     const container = document.createElement("div");
     container.id = `tile-${tile.id}`;
     container.classList.add("tile");
@@ -59,7 +79,7 @@ export class Game {
     return container;
   }
 
-  update() {
+  private update(): void {
     const boardElement = this.container.querySelector("#board");
     if (!boardElement) return;
 
@@ -88,7 +108,11 @@ export class Game {
     });
   }
 
-  updateMovesLabel() {
+  private updateMovesLabel(): void {
     this.movesLabel.innerText = `Moves: ${this.board.totalMoves}`;
+  }
+
+  private checkWinCondition(): void {
+    if (this.board.isSolved()) alert("You won!");
   }
 }
