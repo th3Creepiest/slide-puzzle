@@ -42,7 +42,6 @@ body {
   background-color: darkblue;
   color: white;
 }
-
 #shuffle-button {
   margin-top: 1.5rem;
   padding: 0.8rem 1.5rem;
@@ -56,15 +55,24 @@ body {
   box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.4);
   transition: all 0.2s ease;
 }
-
 #shuffle-button:hover {
   background-color: darkblue;
   color: white;
   transform: scale(1.05);
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.6);
 }
-
 #shuffle-button:active {
   transform: scale(0.95);
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+}
+#moves-label {
+  margin-top: 1rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: black;
+  background-color: #e6eeff;
+  border: 0.15rem solid #666;
+  border-radius: 0.8rem;
+  box-shadow: 0 0 0.4rem rgba(0, 0, 0, 0.2);
 }
